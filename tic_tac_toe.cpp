@@ -81,7 +81,7 @@ int evaluateBoard(const vector<vector<char>> &board) {
 }
 
 // Minimax function for finding the best move
-int minimax(vector<vector<char>> &board, int depth, bool isMaximizer) {
+int minimax(vector<vector<char>> &board, bool isMaximizer) {
     int score = evaluateBoard(board);
     
     if (score == 10)
@@ -100,7 +100,7 @@ int minimax(vector<vector<char>> &board, int depth, bool isMaximizer) {
             for (int j = 0; j < SIZE; ++j) {
                 if (board[i][j] == ' ') {
                     board[i][j] = 'O';
-                    best = max(best, minimax(board, depth + 1, !isMaximizer));
+                    best = max(best, minimax(board, !isMaximizer));
                     board[i][j] = ' ';
                 }
             }
@@ -114,7 +114,7 @@ int minimax(vector<vector<char>> &board, int depth, bool isMaximizer) {
             for (int j = 0; j < SIZE; ++j) {
                 if (board[i][j] == ' ') {
                     board[i][j] = 'X';
-                    best = min(best, minimax(board, depth + 1, !isMaximizer));
+                    best = min(best, minimax(board, !isMaximizer));
                     board[i][j] = ' ';
                 }
             }
@@ -133,7 +133,7 @@ void makeComputerMove(vector<vector<char>> &board) {
         for (int j = 0; j < SIZE; ++j) {
             if (board[i][j] == ' ') {
                 board[i][j] = 'O';
-                int moveScore = minimax(board, 0, false);
+                int moveScore = minimax(board, false);
                 board[i][j] = ' ';
 
                 if (moveScore > bestScore) {
